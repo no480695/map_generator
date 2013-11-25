@@ -20,6 +20,8 @@ map.generateMap = function ( req, res, next ){
 
   emptyMap = addWhiteNoise( emptyMap );
 
+  res.locals.htmlMap = printMap( emptyMap );
+
   console.log(emptyMap);
 
   res.locals.title = "Nathan";
@@ -58,5 +60,8 @@ function addWhiteNoise( map ){
   }
   return map;
 
+}
+function printMap( map ){
+  return "<tr><td>hey</td></tr>";
 }
 
