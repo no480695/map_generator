@@ -9,14 +9,16 @@ hash      = require('node_hash');
 map.generateMap = function ( req, res, next ){
 
   var
-  width   = 120,
-  height  = 200;
+  width   = 100,
+  height  = 30;
 
   //var map = ndarray( new Float64Array(width*height),[width,height]);
 
   var emptyMap = buildMatrix( width, height );
 
   emptyMap = addWhiteNoise( emptyMap );
+
+  console.log(emptyMap);
 
   res.locals.htmlMap = JSON.stringify(emptyMap);
 
