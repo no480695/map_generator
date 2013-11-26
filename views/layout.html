@@ -169,8 +169,8 @@
         gl.bindBuffer(gl.ARRAY_BUFFER, triangleVertexColorBuffer);
         var colors = [
             1.0, 0.0, 0.0, 1.0,
-            0.0, 1.0, 0.0, 1.0,
-            0.0, 0.0, 1.0, 1.0,
+            1.0, 1.0, 0.0, 1.0,
+            1.0, 0.5, 0.0, 1.0,
         ];
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.STATIC_DRAW);
         triangleVertexColorBuffer.itemSize = 4;
@@ -224,7 +224,7 @@
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-        mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 100.0, pMatrix);
+        mat4.perspective(45, gl.viewportWidth / gl.viewportHeight, 0.1, 10000.0, pMatrix);
 
         mat4.identity(mvMatrix);
 
@@ -254,27 +254,33 @@
     function handleKeys() {
         if (currentlyPressedKeys[33]) {
           // Page Up
-          velocity.z -= 0.005;
+          if ( velocity.z > -1 )
+          velocity.z -= 0.04;
         }
         if (currentlyPressedKeys[34]) {
           // Page Down
-          velocity.z += 0.005;
+          if ( velocity.z < 1 )
+          velocity.z += 0.04;
         }
         if (currentlyPressedKeys[37]) {
           // Left cursor key
-          velocity.x -= 0.005;
+          if ( velocity.x > -1 )
+          velocity.x -= 0.04;
         }
         if (currentlyPressedKeys[39]) {
           // Right cursor key
-          velocity.x += 0.005;
+          if ( velocity.x < 1 )
+          velocity.x += 0.04;
         }
         if (currentlyPressedKeys[38]) {
           // Up cursor key
-          velocity.y += 0.005;
+          if ( velocity.y < 1 )
+          velocity.y += 0.04;
         }
         if (currentlyPressedKeys[40]) {
           // Down cursor key
-          velocity.y -= 0.005;
+          if ( velocity.z > -1 )
+          velocity.y -= 0.04;
         }
       }
 
@@ -288,9 +294,39 @@
         }
         lastTime = timeNow;
 
+         velocity.y -= 0.02;
+
         pTri.x += velocity.x;
         pTri.y += velocity.y;
         pTri.z += velocity.z;
+        if ( pTri.x > 30 ){
+            pTri.x = 30;
+            velocity.x = 0;
+        }
+        else if ( pTri.x < -30 ){
+            pTri.x = -30;
+            velocity.x = 0;
+        }
+
+        console.log(velocity.y,pTri.y);
+
+        if ( pTri.y > 16 ){
+            pTri.y = 16;
+            velocity.y = 0;
+        }
+        else if ( pTri.y < -10 ){
+            pTri.y = -10;
+            velocity.y = 0;
+        }
+
+        /*if ( pTri.x > 32 ){
+            pTri.x = 32;
+            velocity.x = 0;
+        }
+        else if ( pTri.x < -32 ){
+            pTri.x = -32;
+            velocity.x = 0;
+        }*/
     }
 
 
