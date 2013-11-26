@@ -1,14 +1,10 @@
 
-/*
- * GET home page.
- */
 
 exports.index = function(req, res) {
 
-  return res.render( 'index',{
-      partials:{
-        part: 'parter',
-      }
+  return res.render( 'pages/index',{
+      htmlMap: res.locals.htmlMap,
+      layout: 'layout.html'
     }
   );
 

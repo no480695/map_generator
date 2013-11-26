@@ -9,20 +9,16 @@ hash      = require('node_hash');
 map.generateMap = function ( req, res, next ){
 
   var
-  width   = 20,
-  height  = 10;
+  width   = 120,
+  height  = 200;
 
   //var map = ndarray( new Float64Array(width*height),[width,height]);
 
   var emptyMap = buildMatrix( width, height );
 
-  console.log(emptyMap);
-
   emptyMap = addWhiteNoise( emptyMap );
 
-  res.locals.htmlMap = printMap( emptyMap );
-
-  console.log(emptyMap);
+  res.locals.htmlMap = JSON.stringify(emptyMap);
 
   res.locals.title = "Nathan";
   next();
@@ -39,7 +35,7 @@ function buildMatrix( width, height ){
 
   for ( var x = 0; x < width; x++ ){
     for ( var y = 0; y < height; y++ ){
-      map[x+'_'+y] = { x:x,y:y,altitude:1 }
+      map[x+'_'+y] = { x:x,y:y,z:1 }
     }
   }
 
@@ -53,15 +49,14 @@ function addWhiteNoise( map ){
   for ( var x = 0; x < map.width; x++ ){
     for ( var y = 0; y < map.height; y++ ){
 
-      map[x+'_'+y].altitude = r;
+      map[x+'_'+y].z = r;
       r=Math.floor(Math.random()*2);
 
     }
   }
+
   return map;
 
 }
-function printMap( map ){
-  return "<tr><td>hey</td></tr>";
-}
+
 
